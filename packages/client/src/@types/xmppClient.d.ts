@@ -1,9 +1,9 @@
 declare module '@xmpp/client' {
   export type EventEmitter = import('events').EventEmitter;
 
-  export type XmlElement = import('@xmpp-ts/xml').XmlElement;
+  export type XmlElement = import('@xmpp/xml').Element;
 
-  export type IqCallee = import('@xmpp-ts/iq').IqCallee;
+  export type IqCallee = import('@xmpp/iq').IqCallee;
 
   export function client(options: {
     service?: string;
@@ -32,37 +32,6 @@ declare module '@xmpp/client' {
   export function jid(): any;
 
   export function xml(...args: (string | object)[]): any;
-
-  export namespace jid {
-    class JID {
-      constructor(...args: any[]);
-
-      bare(...args: any[]): void;
-
-      equals(...args: any[]): void;
-
-      getDomain(...args: any[]): void;
-
-      getLocal(...args: any[]): void;
-
-      getResource(...args: any[]): void;
-
-      setDomain(...args: any[]): void;
-
-      setLocal(...args: any[]): void;
-
-      setResource(...args: any[]): void;
-
-      toString(...args: any[]): void;
-    }
-
-    function detectEscape(local: any): any;
-    function equal(a: any, b: any): any;
-    function escapeLocal(local: any): any;
-    function jid(args: any): any;
-    function parse(s: any): any;
-    function unescapeLocal(local: any): any;
-  }
 
   export namespace xml {
     class Element {

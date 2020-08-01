@@ -1,7 +1,7 @@
 {
-  "name": "@xmpp-ts/jid",
-  "version": "0.0.4",
-  "description": "xmpp jid",
+  "name": "@xmpp-ts/roster",
+  "version": "0.0.5",
+  "description": "xmpp roster",
   "keywords": [
     "client",
     "xmpp",
@@ -42,10 +42,13 @@
     "start": "make -s start",
     "test": "make -s test",
     "test:ui": "make test-ui",
-    "test:watch": "make -s test-watch"
+    "test:watch": "make -s test-watch",
+    "postinstall": "link-type-definitions link"
   },
   "dependencies": {
-    "@xmpp/jid": "^0.11.0",
+    "@xmpp-plugins/roster": "^1.2.0",
+    "@xmpp-ts/client": "workspace:^0.0.4",
+    "@xmpp-ts/iq": "workspace:^0.0.4",
     "core-js": "^3.6.5"
   },
   "devDependencies": {
@@ -58,6 +61,8 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
     "@types/jest": "^25.2.1",
+    "@types/ltx": "^2.8.1",
+    "@types/xmpp__xml": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "cspell": "^4.0.57",
@@ -68,6 +73,7 @@
     "gnumake": "^0.3.1",
     "jest": "^25.5.2",
     "jest-sonar-reporter": "^2.0.0",
+    "link-type-definitions": "^0.2.4",
     "lockfile-lint": "^4.2.2",
     "majestic": "^1.6.2",
     "prettier": "^2.0.5",
@@ -85,7 +91,11 @@
   },
   "jestSonar": {
     "reportPath": "node_modules/.tmp/reports",
-    "reportFile": "test-report.xml",
+    "reportFile": "test-report.roster",
     "indent": 4
-  }
+  },
+  "linkTypeDefinitions": [
+    "@xmpp-ts/client",
+    "@xmpp-ts/iq"
+  ]
 }

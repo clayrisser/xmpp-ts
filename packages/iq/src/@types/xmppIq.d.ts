@@ -1,4 +1,8 @@
 declare module '@xmpp/iq' {
+  type JID = import('@xmpp/jid').JID;
+
+  type XmlElement = import('@xmpp/xml').Element;
+
   interface IqCalleeMiddleware {
     (args: {
       middleware: any;
@@ -15,13 +19,13 @@ declare module '@xmpp/iq' {
     export type Handler = (context?: Context) => any;
 
     export interface Context {
-      element?: import('@xmpp-ts/xml').XmlElement;
+      element?: XmlElement;
       entity?: Entity;
       from: string | null;
     }
 
     export interface Entity {
-      jid?: import('@xmpp-ts/jid').default;
+      jid?: JID;
     }
   }
 
