@@ -15,13 +15,13 @@ declare module '@xmpp/iq' {
     export type Handler = (context?: Context) => any;
 
     export interface Context {
-      element?: import('@xmpp/xml').XmlElement;
+      element?: import('@xmpp-ts/xml').XmlElement;
       entity?: Entity;
       from: string | null;
     }
 
     export interface Entity {
-      jid?: import('@xmpp/jid');
+      jid?: import('@xmpp-ts/jid').default;
     }
   }
 

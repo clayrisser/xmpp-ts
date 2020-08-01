@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/iq",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "xmpp iq",
   "keywords": [
     "client",
@@ -33,6 +33,7 @@
     "clean": "make -s clean",
     "coverage": "make -s coverage",
     "format": "make -s format",
+    "inc": "npm version patch --git=false 2>/dev/null || true",
     "lint": "make -s lint",
     "prepare": "make -s prepare",
     "purge": "make -s purge",
@@ -44,6 +45,8 @@
     "test:watch": "make -s test-watch"
   },
   "dependencies": {
+    "@xmpp-ts/jid": "workspace:^0.0.1",
+    "@xmpp-ts/xml": "workspace:^0.0.1",
     "@xmpp/iq": "^0.11.0",
     "core-js": "^3.6.5"
   },
