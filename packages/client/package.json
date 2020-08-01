@@ -45,6 +45,9 @@
     "test:watch": "make -s test-watch"
   },
   "dependencies": {
+    "@xmpp-ts/iq": "workspace:^0.0.2",
+    "@xmpp-ts/jid": "workspace:^0.0.2",
+    "@xmpp-ts/xml": "workspace:^0.0.2",
     "@xmpp/client": "^0.11.1",
     "core-js": "^3.6.5"
   },
