@@ -1,3 +1,1 @@
-import all from '@xmpp/client';
-
-export default all;
+export * from '@xmpp/client';
