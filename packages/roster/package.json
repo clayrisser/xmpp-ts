@@ -47,8 +47,8 @@
   },
   "dependencies": {
     "@xmpp-plugins/roster": "^1.2.0",
-    "@xmpp-ts/client": "workspace:^0.0.4",
-    "@xmpp-ts/iq": "workspace:^0.0.4",
+    "@xmpp-ts/client": "workspace:*",
+    "@xmpp-ts/iq": "workspace:*",
     "core-js": "^3.6.5"
   },
   "devDependencies": {
