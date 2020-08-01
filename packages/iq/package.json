@@ -42,7 +42,8 @@
     "start": "make -s start",
     "test": "make -s test",
     "test:ui": "make test-ui",
-    "test:watch": "make -s test-watch"
+    "test:watch": "make -s test-watch",
+    "postinstall": "link-type-definitions link"
   },
   "dependencies": {
     "@xmpp-ts/jid": "workspace:*",
@@ -71,6 +72,7 @@
     "gnumake": "^0.3.1",
     "jest": "^25.5.2",
     "jest-sonar-reporter": "^2.0.0",
+    "link-type-definitions": "^0.2.1",
     "lockfile-lint": "^4.2.2",
     "majestic": "^1.6.2",
     "prettier": "^2.0.5",
@@ -90,5 +92,12 @@
     "reportPath": "node_modules/.tmp/reports",
     "reportFile": "test-report.xml",
     "indent": 4
+  },
+  "linkTypeDefinitions": [
+    "@xmpp-ts/jid",
+    "@xmpp-ts/xml"
+  ],
+  "linkTypeDefinitionsOptions": {
+    "typesLocation": "src/@types/_"
   }
 }

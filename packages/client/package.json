@@ -42,7 +42,8 @@
     "start": "make -s start",
     "test": "make -s test",
     "test:ui": "make test-ui",
-    "test:watch": "make -s test-watch"
+    "test:watch": "make -s test-watch",
+    "postinstall": "link-type-definitions link"
   },
   "dependencies": {
     "@xmpp-ts/iq": "workspace:*",
@@ -74,7 +75,12 @@
     "lockfile-lint": "^4.2.2",
     "majestic": "^1.6.2",
     "prettier": "^2.0.5",
-    "typescript": "^3.8.3"
+    "tsdpm": "^0.1.15",
+    "typescript": "^3.8.3",
+    "link-type-definitions": "^0.2.1"
+  },
+  "typeDefinitions": {
+    "@xmpp-ts/xml": "workspace:*"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -90,5 +96,13 @@
     "reportPath": "node_modules/.tmp/reports",
     "reportFile": "test-report.xml",
     "indent": 4
+  },
+  "linkTypeDefinitions": [
+    "@xmpp-ts/xml",
+    "@xmpp-ts/jid",
+    "@xmpp-ts/iq"
+  ],
+  "linkTypeDefinitionsOptions": {
+    "typesLocation": "src/@types/_"
   }
 }
