@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "an entity that connects to an XMPP server",
   "keywords": [
     "client",
@@ -45,9 +45,9 @@
     "test:watch": "make -s test-watch"
   },
   "dependencies": {
-    "@xmpp-ts/iq": "workspace:^0.0.2",
-    "@xmpp-ts/jid": "workspace:^0.0.2",
-    "@xmpp-ts/xml": "workspace:^0.0.2",
+    "@xmpp-ts/iq": "workspace:*",
+    "@xmpp-ts/jid": "workspace:*",
+    "@xmpp-ts/xml": "workspace:*",
     "@xmpp/client": "^0.11.1",
     "core-js": "^3.6.5"
   },
