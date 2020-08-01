@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/xml",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "xmpp xml",
   "keywords": [
     "client",
