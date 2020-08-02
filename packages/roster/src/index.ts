@@ -99,4 +99,4 @@ export default class RosterClient {
   }
 }
 
-export { Roster, RosterPlugin };
+export { Roster, RosterPlugin, RosterItem };
