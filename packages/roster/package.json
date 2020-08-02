@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/roster",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "description": "xmpp roster",
   "keywords": [
     "client",
@@ -50,7 +50,7 @@
     "@xmpp-ts/types": "workspace:*",
     "@xmpp/jid": "^0.11.0",
     "core-js": "^3.6.5",
-    "link-type-definitions": "^0.3.8"
+    "link-type-definitions": "^0.3.9"
   },
   "peerDependencies": {
     "@xmpp/client": "^0.11.1",
