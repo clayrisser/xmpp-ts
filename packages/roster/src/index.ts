@@ -1,17 +1,20 @@
+import { EventEmitter } from '@xmpp/events';
 import { JID } from '@xmpp/jid';
 import { XmppClient } from '@xmpp/client';
 import createRosterPlugin, {
   Roster,
+  RosterItem,
   RosterPlugin,
-  RosterItem
+  RosterSubscription
 } from '@xmpp-plugins/roster';
 
-export default class RosterClient {
+export default class RosterClient extends EventEmitter {
   static namespace = 'jabber:iq:roster';
 
   plugin: RosterPlugin;
 
   constructor(public xmpp: XmppClient) {
+    super();
     this.plugin = createRosterPlugin(xmpp);
   }
 
@@ -30,73 +33,82 @@ export default class RosterClient {
   on(
     event: 'remove',
     listener: (itme: { jid: JID; version: string }, ...args: any[]) => void
-  ): void;
+  ): this;
   on(
     event: 'set',
     listener: (item: { item: RosterItem; version: string }, args: any[]) => void
-  ): void;
-  on(
-    event: string | symbol | 'remove' | 'set',
+  ): this;
+  on(event: string | symbol, listener: (...args: any[]) => void): this {
+    return this.plugin.on(event, listener) as this;
+  }
+
+  once(event: string | symbol, listener: (...args: any[]) => void): this {
+    return this.plugin.once(event, listener) as this;
+  }
+
+  removeListener(
+    event: string | symbol,
     listener: (...args: any[]) => void
-  ) {
-    return this.plugin.on(event, listener);
+  ): this {
+    return this.plugin.removeListener(event, listener) as this;
   }
 
-  get addListener() {
-    return this.plugin.addListener;
+  off(event: string | symbol, listener: (...args: any[]) => void): this {
+    return this.plugin.off(event, listener) as this;
   }
 
-  get once() {
-    return this.plugin.once;
+  removeAllListeners(event?: string | symbol): this {
+    return this.plugin.removeAllListeners(event) as this;
   }
 
-  get removeListener() {
-    return this.plugin.removeListener;
+  setMaxListeners(n: number): this {
+    return this.plugin.setMaxListeners(n) as this;
   }
 
-  get off() {
-    return this.plugin.off;
+  getMaxListeners(): number {
+    return this.plugin.getMaxListeners();
   }
 
-  get removeAllListeners() {
-    return this.plugin.removeAllListeners;
+  listeners(event: string | symbol): Function[] {
+    return this.plugin.listeners(event);
   }
 
-  get setMaxListeners() {
-    return this.plugin.setMaxListeners;
+  rawListeners(event: string | symbol): Function[] {
+    return this.plugin.rawListeners(event);
   }
 
-  get getMaxListeners() {
-    return this.plugin.getMaxListeners;
+  emit(event: string | symbol, ...args: any[]): boolean {
+    return this.plugin.emit(event, ...args);
   }
 
-  get listeners() {
-    return this.plugin.listeners;
+  listenerCount(type: string | symbol): number {
+    return this.plugin.listenerCount(type);
   }
 
-  get rawListeners() {
-    return this.plugin.rawListeners;
+  prependListener(
+    event: string | symbol,
+    listener: (...args: any[]) => void
+  ): this {
+    return this.plugin.prependListener(event, listener) as this;
   }
 
-  get emit() {
-    return this.plugin.emit;
+  prependOnceListener(
+    event: string | symbol,
+    listener: (...args: any[]) => void
+  ): this {
+    return this.plugin.prependOnceListener(event, listener) as this;
   }
 
-  get listenerCount() {
-    return this.plugin.listenerCount;
+  eventNames(): Array<string | symbol> {
+    return this.plugin.eventNames();
   }
 
-  get prependListener() {
-    return this.plugin.prependListener;
-  }
-
-  get prependOnceListener() {
-    return this.plugin.prependOnceListener;
-  }
-
-  get eventNames() {
-    return this.plugin.eventNames;
+  addListener(
+    event: string | symbol,
+    listener: (...args: any[]) => void
+  ): this {
+    return this.plugin.addListener(event, listener) as this;
   }
 }
 
-export { Roster, RosterPlugin, RosterItem };
+export { Roster, RosterPlugin, RosterItem, RosterSubscription };

@@ -19,7 +19,7 @@ declare module '@xmpp-plugins/roster' {
       groups: string[];
       jid: JID;
       name: string;
-      subscription: string;
+      subscription: RosterSubscription;
     }
 
     export interface RosterPluginSetOptions {
@@ -31,6 +31,11 @@ declare module '@xmpp-plugins/roster' {
       get(version?: string): Promise<Roster>;
       remove(jid: string): Promise<any>;
       set(options: string | JID | RosterPluginSetOptions): Promise<any>;
+    }
+
+    export enum RosterSubscription {
+      NONE = 'none',
+      REMOVE = 'remove'
     }
   }
 
