@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/iq",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "xmpp iq",
   "keywords": [
     "client",
@@ -35,7 +35,7 @@
     "format": "make -s format",
     "inc": "npm version patch --git=false 2>/dev/null || true",
     "lint": "make -s lint",
-    "postinstall": "link-type-definitions link -v",
+    "postinstall": "link-type-definitions link",
     "prepare": "make -s prepare",
     "purge": "make -s purge",
     "report": "make -s report",
@@ -49,7 +49,8 @@
     "@xmpp/iq": "^0.11.0",
     "@xmpp/jid": "^0.11.0",
     "@xmpp/xml": "^0.11.0",
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "link-type-definitions": "^0.3.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -73,7 +74,6 @@
     "gnumake": "^0.3.5",
     "jest": "^26.2.2",
     "jest-sonar-reporter": "^2.0.0",
-    "link-type-definitions": "^0.3.2",
     "lockfile-lint": "^4.3.7",
     "majestic": "^1.7.0",
     "prettier": "^2.0.5",

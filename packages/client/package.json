@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/client",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "description": "an entity that connects to an XMPP server",
   "keywords": [
     "client",
@@ -42,14 +42,16 @@
     "start": "make -s start",
     "test": "make -s test",
     "test:ui": "make test-ui",
-    "test:watch": "make -s test-watch"
+    "test:watch": "make -s test-watch",
+    "postinstall": "link-type-definitions link"
   },
   "dependencies": {
     "@xmpp-ts/iq": "workspace:*",
     "@xmpp/client": "^0.11.1",
     "@xmpp/jid": "^0.11.0",
     "@xmpp/xml": "^0.11.0",
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "link-type-definitions": "^0.3.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -96,5 +98,9 @@
     "reportPath": "node_modules/.tmp/reports",
     "reportFile": "test-report.xml",
     "indent": 4
-  }
+  },
+  "linkTypeDefinitions": [
+    "./lib/@types",
+    "@xmpp-ts/iq"
+  ]
 }
