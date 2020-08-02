@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/types",
-  "version": "0.0.22",
+  "version": "0.0.24",
   "description": "xmpp types",
   "keywords": [
     "client",

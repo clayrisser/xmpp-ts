@@ -3,7 +3,9 @@ declare module '@xmpp/client' {
 
   type XmlElement = import('ltx').Element;
 
-  type IqCallee = import('@xmpp/iq').IqCallee;
+  type IqCallee = import('@xmpp/iq/callee').IqCallee;
+
+  type IqCaller = import('@xmpp/iq/caller').IqCaller;
 
   export function client(options: {
     service?: string;
@@ -21,6 +23,7 @@ declare module '@xmpp/client' {
     domain: string;
     fullJid: string;
     iqCallee: IqCallee;
+    iqCaller: IqCaller;
     jid: string;
     resource: number;
     send: (...args: any) => Promise<any>;
