@@ -1,7 +1,7 @@
 declare module '@xmpp/iq' {
   type JID = import('@xmpp/jid').JID;
 
-  type XmlElement = import('@xmpp/xml').Element;
+  type XmlElement = import('ltx').Element;
 
   interface IqCalleeMiddleware {
     (args: {

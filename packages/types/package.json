@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/types",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "xmpp types",
   "keywords": [
     "client",
@@ -46,10 +46,11 @@
     "test:watch": "make -s test-watch"
   },
   "dependencies": {
+    "@types/ltx": "^2.8.1",
     "@types/xmpp__jid": "^1.3.0",
-    "@types/xmpp__xml": "^0.6.0",
     "core-js": "^3.6.5",
-    "link-type-definitions": "^0.3.9"
+    "link-type-definitions": "^0.3.9",
+    "ltx": "^2.9.2"
   },
   "peerDependencies": {
     "@xmpp/client": "^0.11.1",

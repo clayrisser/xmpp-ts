@@ -1,9 +1,9 @@
 declare module '@xmpp/client' {
-  export type EventEmitter = import('events').EventEmitter;
+  type EventEmitter = import('events').EventEmitter;
 
-  export type XmlElement = import('@xmpp/xml').Element;
+  type XmlElement = import('ltx').Element;
 
-  export type IqCallee = import('@xmpp/iq').IqCallee;
+  type IqCallee = import('@xmpp/iq').IqCallee;
 
   export function client(options: {
     service?: string;
