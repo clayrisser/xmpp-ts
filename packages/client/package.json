@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/client",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "an entity that connects to an XMPP server",
   "keywords": [
     "client",

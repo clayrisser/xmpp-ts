@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/iq",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "xmpp iq",
   "keywords": [
     "client",
@@ -73,7 +73,7 @@
     "gnumake": "^0.3.5",
     "jest": "^26.2.2",
     "jest-sonar-reporter": "^2.0.0",
-    "link-type-definitions": "^0.2.7",
+    "link-type-definitions": "^0.2.8",
     "lockfile-lint": "^4.3.7",
     "majestic": "^1.7.0",
     "prettier": "^2.0.5",
