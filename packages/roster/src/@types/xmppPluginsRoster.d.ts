@@ -1,7 +1,7 @@
 declare module '@xmpp-plugins/roster' {
-  type XmppClient = import('@xmpp/client').XmppClient;
-
+  type EventEmitter = import('@xmpp/events').EventEmitter;
   type JID = import('@xmpp/jid').JID;
+  type XmppClient = import('@xmpp/client').XmppClient;
 
   function RosterPluginFactory(
     xmpp: XmppClient
@@ -14,7 +14,12 @@ declare module '@xmpp-plugins/roster' {
     }
 
     export interface RosterItem {
-      [key: string]: any;
+      approved: boolean;
+      ask: boolean;
+      groups: string[];
+      jid: JID;
+      name: string;
+      subscription: string;
     }
 
     export interface RosterPluginSetOptions {
@@ -22,7 +27,7 @@ declare module '@xmpp-plugins/roster' {
       name?: string;
     }
 
-    export interface RosterPlugin {
+    export interface RosterPlugin extends EventEmitter {
       get(version?: string): Promise<Roster>;
       remove(jid: string): Promise<any>;
       set(options: string | JID | RosterPluginSetOptions): Promise<any>;
