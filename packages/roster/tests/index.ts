@@ -1,4 +1,4 @@
-import { client as xmppClient } from '@xmpp-ts/client';
+import { client as xmppClient } from '@xmpp/client';
 import RosterClient from '../src';
 
 describe('createXmppPlugin', () => {

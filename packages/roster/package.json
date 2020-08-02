@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/roster",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "xmpp roster",
   "keywords": [
     "client",
@@ -48,8 +48,14 @@
   "dependencies": {
     "@xmpp-plugins/roster": "^1.2.0",
     "@xmpp-ts/types": "workspace:*",
+    "@xmpp/jid": "^0.11.0",
     "core-js": "^3.6.5",
     "link-type-definitions": "^0.3.8"
+  },
+  "peerDependencies": {
+    "@xmpp/client": "^0.11.1",
+    "@xmpp/events": "^0.11.0",
+    "@xmpp/iq": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -61,10 +67,12 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.8",
-    "@types/ltx": "^2.8.1",
-    "@types/xmpp__xml": "^0.6.0",
+    "@types/xmpp__jid": "^1.3.0",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
+    "@xmpp/client": "^0.11.1",
+    "@xmpp/events": "^0.11.0",
+    "@xmpp/iq": "^0.11.0",
     "cspell": "^4.0.63",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-typescript": "^9.0.0",

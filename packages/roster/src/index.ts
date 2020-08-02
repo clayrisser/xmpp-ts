@@ -1,6 +1,6 @@
 import createRosterPlugin, { Roster, RosterPlugin } from '@xmpp-plugins/roster';
 import { JID } from '@xmpp/jid';
-import { XmppClient } from '@xmpp-ts/client';
+import { XmppClient } from '@xmpp/client';
 
 export default class RosterClient {
   static namespace = 'jabber:iq:roster';

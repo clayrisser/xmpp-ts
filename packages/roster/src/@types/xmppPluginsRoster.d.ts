@@ -1,5 +1,5 @@
 declare module '@xmpp-plugins/roster' {
-  type XmppClient = import('@xmpp-ts/client').XmppClient;
+  type XmppClient = import('@xmpp/client').XmppClient;
 
   type JID = import('@xmpp/jid').JID;
 
