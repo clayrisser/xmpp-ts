@@ -35,6 +35,7 @@
     "format": "make -s format",
     "inc": "npm version patch --git=false 2>/dev/null || true",
     "lint": "make -s lint",
+    "postinstall": "link-type-definitions link",
     "prepare": "make -s prepare",
     "purge": "make -s purge",
     "report": "make -s report",
@@ -46,9 +47,9 @@
   },
   "dependencies": {
     "@xmpp-plugins/roster": "^1.2.0",
-    "@xmpp-ts/client": "workspace:*",
-    "@xmpp-ts/iq": "workspace:*",
-    "core-js": "^3.6.5"
+    "@xmpp-ts/types": "workspace:*",
+    "core-js": "^3.6.5",
+    "link-type-definitions": "^0.3.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -72,7 +73,6 @@
     "gnumake": "^0.3.5",
     "jest": "^26.2.2",
     "jest-sonar-reporter": "^2.0.0",
-    "link-type-definitions": "^0.3.8",
     "lockfile-lint": "^4.3.7",
     "majestic": "^1.7.0",
     "prettier": "^2.0.5",
@@ -94,7 +94,7 @@
     "indent": 4
   },
   "linkTypeDefinitions": [
-    "@xmpp-ts/client",
-    "@xmpp-ts/iq"
+    "./lib/@types",
+    "@xmpp-ts/types"
   ]
 }

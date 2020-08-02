@@ -12,7 +12,7 @@ node_modules: package.json
 
 .PHONY: prepare
 prepare:
-	@link-type-definitions link
+	@
 
 .PHONY: format
 format: install
