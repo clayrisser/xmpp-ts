@@ -12,7 +12,7 @@ declare module '@xmpp/client' {
   export function client(options: {
     service?: string;
     domain?: string;
-    resource?: number;
+    resource?: string;
     username?: string;
     password?: string;
     credentials?: (
