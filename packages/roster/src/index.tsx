@@ -22,16 +22,15 @@ export default class RosterClient extends EventEmitter {
         console.log('IQ Context', context);
         if (context.from !== null) {
           const myJid = context.entity?.jid?.bare();
-          // TODO: add domain
           const sendingJid = new JID(
-            context.from,
-            'test.siliconhills.dev'
+            context.from.toString(),
+            context.domain
           ).bare();
           // TODO: proper response
           if (!sendingJid.equals(myJid)) return false;
         }
         const child = context.element;
-        const rosterItem = RosterClient.parseRosterItem(child.getChild('item'));
+        const rosterItem = this.parseRosterItem(child.getChild('item'));
         if (rosterItem?.subscription === RosterSubscription.REMOVE) {
           this.emit('remove', {
             jid: rosterItem.jid,
@@ -58,7 +57,7 @@ export default class RosterClient extends EventEmitter {
     return {
       items: (queryElement?.getChildren('item') || []).reduce(
         (rosterItems: RosterItem[], itemElement: XmlElement) => {
-          const rosterItem = RosterClient.parseRosterItem(itemElement);
+          const rosterItem = this.parseRosterItem(itemElement);
           if (rosterItem) rosterItems.push(rosterItem);
           return rosterItems;
         },
@@ -111,15 +110,14 @@ export default class RosterClient extends EventEmitter {
     return super.on(event, listener) as this;
   }
 
-  static parseRosterItem(item?: XmlElement): RosterItem | undefined {
+  parseRosterItem(item?: XmlElement): RosterItem | undefined {
     if (!item) return;
     return {
       ...item.attrs,
       approved: item.attrs.approved === 'true',
       ask: item.attrs.ask === RosterAsk.SUBSCRIBE,
       groups: item.getChildren('group').map((group) => group.text()),
-      // TODO: add domain
-      jid: new JID(item.attrs.jid, 'test.siliconhills.dev'),
+      jid: new JID(item.attrs.jid, this.client.domain),
       name: item.attrs.name || '',
       subscription: item.attrs.subscription || RosterSubscription.NONE
     };
