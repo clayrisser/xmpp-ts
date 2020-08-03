@@ -125,8 +125,8 @@ export default class RosterClient extends EventEmitter {
 }
 
 export interface Roster {
-  version: string;
   items: RosterItem[];
+  version?: string;
 }
 
 export interface RosterItem {
