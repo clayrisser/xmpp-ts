@@ -23,7 +23,10 @@ export default class RosterClient extends EventEmitter {
         if (context.from !== null) {
           const myJid = context.entity?.jid?.bare();
           // TODO: add domain
-          const sendingJid = new JID(context.from, '').bare();
+          const sendingJid = new JID(
+            context.from,
+            'test.siliconhills.dev'
+          ).bare();
           // TODO: proper response
           if (!sendingJid.equals(myJid)) return false;
         }
@@ -116,7 +119,7 @@ export default class RosterClient extends EventEmitter {
       ask: item.attrs.ask === RosterAsk.SUBSCRIBE,
       groups: item.getChildren('group').map((group) => group.text()),
       // TODO: add domain
-      jid: new JID(item.attrs.jid, ''),
+      jid: new JID(item.attrs.jid, 'test.siliconhills.dev'),
       name: item.attrs.name || '',
       subscription: item.attrs.subscription || RosterSubscription.NONE
     };
