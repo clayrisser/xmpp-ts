@@ -117,7 +117,7 @@ export default class RosterClient extends EventEmitter {
       approved: item.attrs.approved === 'true',
       ask: item.attrs.ask === RosterAsk.SUBSCRIBE,
       groups: item.getChildren('group').map((group) => group.text()),
-      jid: new JID(item.attrs.jid, this.client.domain),
+      jid: new JID(item.attrs.jid, this.client.jid.domain),
       name: item.attrs.name || '',
       subscription: item.attrs.subscription || RosterSubscription.NONE
     };

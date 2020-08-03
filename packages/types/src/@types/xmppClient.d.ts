@@ -5,6 +5,8 @@ declare module '@xmpp/client' {
 
   type IqCallee = import('@xmpp/iq/callee').IqCallee;
 
+  type JID = import('@xmpp/jid').JID;
+
   type IqCaller = import('@xmpp/iq/caller').IqCaller;
 
   export function client(options: {
@@ -20,12 +22,9 @@ declare module '@xmpp/client' {
   }): XmppClient;
 
   export type XmppClient = EventEmitter & {
-    domain: string;
-    fullJid: string;
     iqCallee: IqCallee;
     iqCaller: IqCaller;
-    jid: string;
-    resource: number;
+    jid: JID;
     send: (...args: any) => Promise<any>;
     start: () => Promise<any>;
     stop: () => Promise<any>;
