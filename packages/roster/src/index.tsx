@@ -19,14 +19,13 @@ export default class RosterClient extends EventEmitter {
       RosterClient.namespace,
       'query',
       (context: IqContext) => {
-        console.log('IQ Context', context);
         if (context.from !== null) {
           const myJid = context.entity?.jid?.bare();
           const sendingJid = new JID(
             context.from.toString(),
             context.domain
           ).bare();
-          // TODO: proper response
+          console.log('MY === SENDING', sendingJid.equals(myJid));
           if (!sendingJid.equals(myJid)) return false;
         }
         const child = context.element;
@@ -37,6 +36,7 @@ export default class RosterClient extends EventEmitter {
             version: child.attrs.ver
           });
         } else {
+          console.log('EMITTING SET', child.attrs.ver);
           this.emit('set', { item: rosterItem, version: child.attrs.ver });
         }
         // TODO: proper response
