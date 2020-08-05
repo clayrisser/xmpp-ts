@@ -21,11 +21,7 @@ export default class RosterClient extends EventEmitter {
       (context: IqContext) => {
         if (context.from !== null) {
           const myJid = context.entity?.jid?.bare();
-          const sendingJid = new JID(
-            context.from.toString(),
-            context.domain
-          ).bare();
-          console.log('MY === SENDING', sendingJid.equals(myJid));
+          const sendingJid = new JID(context.from.local, context.domain).bare();
           if (!sendingJid.equals(myJid)) return false;
         }
         const child = context.element;
@@ -117,7 +113,12 @@ export default class RosterClient extends EventEmitter {
       approved: item.attrs.approved === 'true',
       ask: item.attrs.ask === RosterAsk.SUBSCRIBE,
       groups: item.getChildren('group').map((group) => group.text()),
-      jid: new JID(item.attrs.jid, this.client.jid.domain),
+      jid: new JID(
+        item.attrs.jid.split('@')?.[0],
+        item.attrs.jid.split('@')?.[1]?.split('/')?.[0] ||
+          this.client.jid.domain,
+        item.attrs.jid.split('@')?.[1]?.split('/')?.[1]
+      ),
       name: item.attrs.name || '',
       subscription: item.attrs.subscription || RosterSubscription.NONE
     };
