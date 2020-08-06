@@ -32,7 +32,6 @@ export default class RosterClient extends EventEmitter {
             version: child.attrs.ver
           });
         } else {
-          console.log('EMITTING SET', child.attrs.ver);
           this.emit('set', { item: rosterItem, version: child.attrs.ver });
         }
         // TODO: proper response
