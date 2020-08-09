@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/roster",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "xmpp roster",
   "keywords": [
     "client",
@@ -48,13 +48,13 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@xmpp-ts/types": "workspace:*",
-    "@xmpp/jid": "^0.11.0",
     "core-js": "^3.6.5"
   },
   "peerDependencies": {
     "@xmpp/client": "^0.11.1",
     "@xmpp/events": "^0.11.0",
-    "@xmpp/iq": "^0.11.0"
+    "@xmpp/iq": "^0.11.0",
+    "@xmpp/jid": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -74,6 +74,7 @@
     "@xmpp/client": "^0.11.1",
     "@xmpp/events": "^0.11.0",
     "@xmpp/iq": "^0.11.0",
+    "@xmpp/jid": "^0.11.0",
     "cspell": "^4.0.63",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-typescript": "^9.0.0",

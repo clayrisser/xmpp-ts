@@ -1,6 +1,6 @@
 /**
  * @jsx xml
- * https://tools.ietf.org/html/rfc6121#section-2
+ * https://xmpp.org/rfcs/rfc6121.html#roster
  * https://xmpp.org/extensions/xep-0237.html
  */
 import xml from '@xmpp/xml';
@@ -18,25 +18,7 @@ export default class RosterClient extends EventEmitter {
     this.client.iqCallee.set(
       RosterClient.namespace,
       'query',
-      (context: IqContext) => {
-        if (context.from !== null) {
-          const myJid = context.entity?.jid?.bare();
-          const sendingJid = new JID(context.from.local, context.domain).bare();
-          if (!sendingJid.equals(myJid)) return false;
-        }
-        const child = context.element;
-        const rosterItem = this.parseRosterItem(child.getChild('item'));
-        if (rosterItem?.subscription === RosterSubscription.REMOVE) {
-          this.emit('remove', {
-            jid: rosterItem.jid,
-            version: child.attrs.ver
-          });
-        } else {
-          this.emit('set', { item: rosterItem, version: child.attrs.ver });
-        }
-        // TODO: proper response
-        return true;
-      }
+      this.handleSetQuery
     );
   }
 
@@ -93,9 +75,28 @@ export default class RosterClient extends EventEmitter {
     );
   }
 
+  handleSetQuery(context: IqContext) {
+    if (context.from !== null) {
+      const myJid = context.entity?.jid?.bare();
+      const sendingJid = new JID(context.from.local, context.domain).bare();
+      if (!sendingJid.equals(myJid)) return false;
+    }
+    const child = context.element;
+    const rosterItem = this.parseRosterItem(child.getChild('item'));
+    if (rosterItem?.subscription === RosterSubscription.REMOVE) {
+      this.emit('remove', {
+        jid: rosterItem.jid,
+        version: child.attrs.ver
+      });
+    } else {
+      this.emit('set', { item: rosterItem, version: child.attrs.ver });
+    }
+    return true;
+  }
+
   on(
     event: 'remove',
-    listener: (itme: { jid: JID; version: string }, ...args: any[]) => void
+    listener: (item: { jid: JID; version: string }, ...args: any[]) => void
   ): this;
   on(
     event: 'set',
@@ -103,6 +104,21 @@ export default class RosterClient extends EventEmitter {
   ): this;
   on(event: string | symbol, listener: (...args: any[]) => void): this {
     return super.on(event, listener) as this;
+  }
+
+  removeListener(
+    event: 'remove',
+    listener: (item: { item: RosterItem; version: string }, args: any[]) => void
+  ): this;
+  removeListener(
+    event: 'set',
+    listener: (item: { item: RosterItem; version: string }, args: any[]) => void
+  ): this;
+  removeListener(
+    event: string | symbol,
+    listener: (...args: any[]) => void
+  ): this {
+    return super.removeListener(event, listener);
   }
 
   parseRosterItem(item?: XmlElement): RosterItem | undefined {

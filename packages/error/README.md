@@ -1,15 +1,15 @@
-# @xmpp-ts/xml
+# @xmpp-ts/error
 
-[![GitHub stars](https://img.shields.io/github/stars/codejamninja/xml.svg?style=social&label=Stars)](https://github.com/codejamninja/xmpp-ts)
+[![GitHub stars](https://img.shields.io/github/stars/codejamninja/error.svg?style=social&label=Stars)](https://github.com/codejamninja/xmpp-ts)
 
-> xmpp xml
+> xmpp error
 
 Please ★ this repo if you found it useful ★ ★ ★
 
 ## Installation
 
 ```sh
-npm install --save @xmpp-ts/xml
+npm install --save @xmpp-ts/error
 ```
 
 ## Dependencies
@@ -34,8 +34,7 @@ Review the [guidelines for contributing](https://github.com/codejamninja/xmpp-ts
 
 ## Resources
 
-- [RFC-6121: Managing the Roster](https://xmpp.org/rfcs/rfc6121.html#roster)
-- [XEP-0237: Roster Versioning](https://xmpp.org/extensions/xep-0237.html)
+- [XEP-0086: Error Condition Mappings](https://xmpp.org/extensions/xep-0086.html)
 
 ## License
 
