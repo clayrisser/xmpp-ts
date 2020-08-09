@@ -7,28 +7,29 @@ import { EventEmitter } from '@xmpp/events';
 import { JID } from '@xmpp/jid';
 import { XmppClient } from '@xmpp/client';
 
+export interface Logger {
+  debug(message?: any, ...optionalParams: any[]): void;
+}
+
 export default class PresenceClient extends EventEmitter {
   options: PresenceClientOptions;
 
-  logger: Console;
+  logger: Logger = {
+    debug: (message?: any, ...optionalParams: any[]) => {
+      if (this.options.debug) this.logger.debug(message, ...optionalParams);
+    }
+  };
 
   constructor(
     public client: XmppClient,
     options: Partial<PresenceClientOptions> = {}
   ) {
     super();
-    this.logger = console;
     this.options = {
       debug: false,
       defaultSubscribeResponse: PresenceType.SUBSCRIBED,
       ...options
     };
-    if (!this.options.debug) {
-      // @ts-ignore
-      this.logger = {
-        debug() {}
-      };
-    }
     this.client.on('stanza', this.handleStanza.bind(this));
     this.on('presence', this.handlePresence.bind(this));
   }
@@ -37,7 +38,6 @@ export default class PresenceClient extends EventEmitter {
     if (presenceElement.name === 'presence') {
       const presence = this.parsePresence(presenceElement);
       if (!presence) throw new Error('failed to parse presence');
-      this.logger.debug('presence', presence);
       this.emit('presence', presence);
     }
   }
