@@ -26,8 +26,8 @@ export default class PresenceClient extends EventEmitter {
     if (!this.options.debug) {
       this.logger.debug = () => {};
     }
-    this.client.on('stanza', this.handleStanza);
-    this.on('presence', this.handlePresence);
+    this.client.on('stanza', this.handleStanza.bind(this));
+    this.on('presence', this.handlePresence.bind(this));
   }
 
   handleStanza(presenceElement: XmlElement) {

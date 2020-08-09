@@ -18,7 +18,7 @@ export default class RosterClient extends EventEmitter {
     this.client.iqCallee.set(
       RosterClient.namespace,
       'query',
-      this.handleSetQuery
+      this.handleSetQuery.bind(this)
     );
   }
 
