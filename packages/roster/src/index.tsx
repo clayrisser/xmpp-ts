@@ -108,7 +108,7 @@ export default class RosterClient extends EventEmitter {
 
   removeListener(
     event: 'remove',
-    listener: (item: { item: RosterItem; version: string }, args: any[]) => void
+    listener: (item: { jid: JID; version: string }, args: any[]) => void
   ): this;
   removeListener(
     event: 'set',
