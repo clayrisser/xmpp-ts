@@ -1,5 +1,5 @@
-describe('createXmppPlugin', () => {
-  it('should be setup', async () => {
+describe('@xmpp-ts/roster', () => {
+  it('should work', async () => {
     expect(true).toBe(true);
   });
 });

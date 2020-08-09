@@ -1,15 +1,15 @@
-# @xmpp-ts/roster
+# @xmpp-ts/presence
 
-[![GitHub stars](https://img.shields.io/github/stars/codejamninja/roster.svg?style=social&label=Stars)](https://github.com/codejamninja/xmpp-ts)
+[![GitHub stars](https://img.shields.io/github/stars/codejamninja/presence.svg?style=social&label=Stars)](https://github.com/codejamninja/xmpp-ts)
 
-> xmpp roster
+> xmpp presence
 
 Please ★ this repo if you found it useful ★ ★ ★
 
 ## Installation
 
 ```sh
-npm install --save @xmpp-ts/roster
+npm install --save @xmpp-ts/presence
 ```
 
 ## Dependencies
@@ -34,8 +34,7 @@ Review the [guidelines for contributing](https://github.com/codejamninja/xmpp-ts
 
 ## Resources
 
-- [RFC-6121: Managing the Roster](https://xmpp.org/rfcs/rfc6121.html#roster)
-- [XEP-0237: Roster Versioning](https://xmpp.org/extensions/xep-0237.html)
+- [RFC-6121: Exchanging Presence Information](https://xmpp.org/rfcs/rfc6121.html#presence)
 
 ## License
 

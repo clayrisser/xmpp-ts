@@ -27,7 +27,7 @@ export enum XmppErrorCode {
 }
 
 export default class XmppError extends XmppJsError {
-  constructor(code: XmppErrorCode, message: string, element: XmlElement) {
+  constructor(code: XmppErrorCode, message?: string, element?: XmlElement) {
     super(code, message, element);
   }
 }
