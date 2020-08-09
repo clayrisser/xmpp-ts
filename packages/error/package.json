@@ -51,8 +51,8 @@
     "core-js": "^3.6.5"
   },
   "peerDependencies": {
-    "@xmpp/xml": "^0.11.0",
-    "@xmpp/error": "^0.11.0"
+    "@xmpp/error": "^0.11.0",
+    "@xmpp/xml": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
