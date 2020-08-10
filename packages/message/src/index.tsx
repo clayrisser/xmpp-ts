@@ -9,7 +9,7 @@ import { EventEmitter } from '@xmpp/events';
 import { XmppClient } from '@xmpp/client';
 
 export default class MessageClient extends EventEmitter {
-  static namespace = 'jabber:iq:roster';
+  static namespace = 'jabber:client';
 
   options: MessageClientOptions;
 
