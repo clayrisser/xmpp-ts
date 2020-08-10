@@ -20,12 +20,13 @@ export default class Jid extends JID {
       } else {
         super(local, domain, resource);
       }
+    } else {
+      super(
+        (local as JidObject)._local,
+        (local as JidObject)._domain,
+        (local as JidObject)._resource
+      );
     }
-    super(
-      (local as JidObject)._local,
-      (local as JidObject)._domain,
-      (local as JidObject)._resource
-    );
   }
 }
 

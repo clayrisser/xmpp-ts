@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/presence",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "xmpp presence",
   "keywords": [
     "client",
