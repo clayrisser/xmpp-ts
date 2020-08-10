@@ -36,6 +36,7 @@ export default class MessageClient extends EventEmitter {
     if (messageElement.name === 'message') {
       const message = this.parseMessage(messageElement);
       if (!message) throw new Error('failed to parse message');
+      console.log('emitting', message);
       this.emit('message', message);
     }
   }
