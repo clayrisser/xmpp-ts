@@ -4,12 +4,9 @@
  */
 import Jid from '@xmpp-ts/jid';
 import xml from '@xmpp/xml';
+import { Element as XmlElement } from 'ltx';
 import { EventEmitter } from '@xmpp/events';
 import { XmppClient } from '@xmpp/client';
-
-export interface Logger {
-  debug(message?: any, ...optionalParams: any[]): void;
-}
 
 export default class MessageClient extends EventEmitter {
   static namespace = 'jabber:iq:roster';
@@ -31,6 +28,15 @@ export default class MessageClient extends EventEmitter {
       debug: false,
       ...options
     };
+    this.client.on('stanza', this.handleStanza.bind(this));
+  }
+
+  handleStanza(messageElement: XmlElement) {
+    if (messageElement.name === 'message') {
+      const message = this.parseMessage(messageElement);
+      if (!message) throw new Error('failed to parse message');
+      this.emit('message', message);
+    }
   }
 
   send({ to, body, lang, from }: MessageClientSendOptions = {}) {
@@ -51,16 +57,13 @@ export default class MessageClient extends EventEmitter {
     this.client.send(request);
   }
 
-  on(
-    event: 'unavailable',
-    listener: (message: Message, args: any[]) => void
-  ): this;
+  on(event: 'message', listener: (message: Message, args: any[]) => void): this;
   on(event: string | symbol, listener: (...args: any[]) => void): this {
     return super.on(event, listener) as this;
   }
 
   removeListener(
-    event: 'unavailable',
+    event: 'message',
     listener: (message: Message, args: any[]) => void
   ): this;
   removeListener(
@@ -68,6 +71,24 @@ export default class MessageClient extends EventEmitter {
     listener: (...args: any[]) => void
   ): this {
     return super.removeListener(event, listener);
+  }
+
+  parseMessage(messageElement: XmlElement): Message {
+    const from = messageElement.getAttr('from');
+    const header = messageElement.getChild('header')?.text() || undefined;
+    const id = messageElement.getAttr('id');
+    const stamp = new Date();
+    const lang = messageElement.getAttr('xml:lang');
+    const to = messageElement.getAttr('to');
+    const body = messageElement
+      .getChildren('body')
+      .reduce((body: string, bodyElement: XmlElement) => {
+        return [body, bodyElement.text()].join('\n');
+      }, '');
+    if (body && from && to && id) {
+      return { body, from, to, header, stamp, id, lang };
+    }
+    throw new Error('invalid message stanza');
   }
 }
 
@@ -84,10 +105,14 @@ export interface MessageClientSendOptions {
 
 export interface Message {
   body: string;
-  from: string;
+  from: Jid;
   header?: string;
   id: string;
   lang?: string;
   stamp?: Date;
-  to: string;
+  to: Jid;
+}
+
+export interface Logger {
+  debug(message?: any, ...optionalParams: any[]): void;
 }
