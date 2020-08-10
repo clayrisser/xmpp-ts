@@ -2,7 +2,7 @@
   "name": "xmpp-ts",
   "description": "cross platform react ui framework",
   "private": true,
-  "version": "0.0.45",
+  "version": "0.0.47",
   "files": [
     "packages"
   ],

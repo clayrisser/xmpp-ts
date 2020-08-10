@@ -1,7 +1,7 @@
 {
-  "name": "@xmpp-ts/roster",
+  "name": "@xmpp-ts/message",
   "version": "0.0.47",
-  "description": "xmpp roster",
+  "description": "xmpp message",
   "keywords": [
     "client",
     "xmpp",
@@ -53,7 +53,6 @@
   },
   "peerDependencies": {
     "@xmpp/client": "^0.11.1",
-    "@xmpp/error": "^0.11.0",
     "@xmpp/events": "^0.11.0",
     "@xmpp/jid": "^0.11.0"
   },
@@ -73,7 +72,6 @@
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
     "@xmpp/client": "^0.11.1",
-    "@xmpp/error": "^0.11.0",
     "@xmpp/events": "^0.11.0",
     "@xmpp/jid": "^0.11.0",
     "cspell": "^4.0.63",
@@ -102,7 +100,7 @@
   },
   "jestSonar": {
     "reportPath": "node_modules/.tmp/reports",
-    "reportFile": "test-report.roster",
+    "reportFile": "test-report.message",
     "indent": 4
   },
   "linkTypeDefinitions": [
