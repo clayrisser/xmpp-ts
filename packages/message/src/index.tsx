@@ -32,11 +32,9 @@ export default class MessageClient extends EventEmitter {
   }
 
   handleStanza(messageElement: XmlElement) {
-    console.log('messageElement', messageElement);
     if (messageElement.name === 'message') {
       const message = this.parseMessage(messageElement);
       if (!message) throw new Error('failed to parse message');
-      console.log('emitting', message);
       this.emit('message', message);
     }
   }
@@ -99,12 +97,14 @@ export default class MessageClient extends EventEmitter {
       const by = byStr ? new Jid(byStr) : undefined;
       if (by && id) stanzaId = { by, id };
     }
-    const from = messageElement.getAttr('from');
+    const fromStr = messageElement.getAttr('from');
+    const from = fromStr ? new Jid(fromStr) : undefined;
     const header = messageElement.getChild('header')?.text() || undefined;
     const id = messageElement.getAttr('id');
     const stamp = new Date();
     const lang = messageElement.getAttr('xml:lang');
-    const to = messageElement.getAttr('to');
+    const toStr = messageElement.getAttr('to');
+    const to = toStr ? new Jid(toStr) : undefined;
     const body = messageElement
       .getChildren('body')
       .reduce((body: string, bodyElement: XmlElement) => {
