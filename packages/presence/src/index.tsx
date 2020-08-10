@@ -103,6 +103,16 @@ export default class PresenceClient extends EventEmitter {
     this.client.send(request);
   }
 
+  async available(options: PresenceClientAvailableOptions = {}) {
+    this.send(options);
+  }
+
+  async unavailable() {
+    this.send({
+      type: PresenceType.UNAVAILABLE
+    });
+  }
+
   on(
     event: 'available',
     listener: (presence: Presence, args: any[]) => void
@@ -213,4 +223,11 @@ export interface PresenceClientSendOptions {
   status?: string;
   to?: Jid;
   type?: PresenceType;
+}
+
+export interface PresenceClientAvailableOptions {
+  lang?: string;
+  priority?: number;
+  show?: PresenceShow;
+  status?: string;
 }
