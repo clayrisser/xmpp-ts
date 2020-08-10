@@ -2,9 +2,9 @@
  * @jsx xml
  * https://xmpp.org/rfcs/rfc6121.html#presence
  */
+import Jid from '@xmpp-ts/jid';
 import xml, { Element as XmlElement } from '@xmpp/xml';
 import { EventEmitter } from '@xmpp/events';
-import { JID } from '@xmpp/jid';
 import { XmppClient } from '@xmpp/client';
 
 export interface Logger {
@@ -89,6 +89,14 @@ export default class PresenceClient extends EventEmitter {
   }
 
   on(
+    event: 'unavailable',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  on(
+    event: 'available',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  on(
     event: 'presence',
     listener: (presence: Presence, args: any[]) => void
   ): this;
@@ -96,6 +104,14 @@ export default class PresenceClient extends EventEmitter {
     return super.on(event, listener) as this;
   }
 
+  removeListener(
+    event: 'unavailable',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  removeListener(
+    event: 'available',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
   removeListener(
     event: 'presence',
     listener: (presence: Presence, args: any[]) => void
@@ -109,25 +125,13 @@ export default class PresenceClient extends EventEmitter {
 
   parsePresence(presenceElement: XmlElement): Presence {
     const fromStr = presenceElement.getAttr('from');
-    const from = fromStr
-      ? new JID(
-          fromStr.split('@')?.[0],
-          fromStr.split('@')?.[1]?.split('/')?.[0] || this.client.jid.domain,
-          fromStr.split('@')?.[1]?.split('/')?.[1]
-        )
-      : undefined;
+    const from = fromStr ? new Jid(fromStr) : undefined;
     const priorityString = presenceElement.getChild('priority')?.text();
     const showString = presenceElement.getChild('show')?.text();
     const show = showString?.length ? (showString as PresenceShow) : undefined;
     const status = presenceElement.getChild('status')?.text();
     const toStr = presenceElement.getAttr('to');
-    const to = toStr
-      ? new JID(
-          toStr.split('@')?.[0],
-          toStr.split('@')?.[1]?.split('/')?.[0] || this.client.jid.domain,
-          toStr.split('@')?.[1]?.split('/')?.[1]
-        )
-      : undefined;
+    const to = toStr ? new Jid(toStr) : undefined;
     const type = presenceElement.getAttr('type');
     const priority = priorityString?.length
       ? Number(priorityString)
@@ -162,11 +166,11 @@ export enum PresenceType {
 }
 
 export interface Presence {
-  from: JID;
+  from: Jid;
   priority?: number;
   show?: PresenceShow;
   status?: string;
-  to: JID;
+  to: Jid;
   type?: PresenceType;
 }
 
@@ -179,11 +183,11 @@ export interface PresenceClientOptions {
 }
 
 export interface PresenceClientSendOptions {
-  from?: JID;
+  from?: Jid;
   lang?: string;
   priority?: number;
   show?: PresenceShow;
   status?: string;
-  to?: JID;
+  to?: Jid;
   type?: PresenceType;
 }

@@ -6,7 +6,7 @@ import { JID } from '@xmpp/jid';
 
 export default class Jid extends JID {
   constructor(
-    local?: string | JID | JidObject,
+    local?: string | JID | JidObject | Jid,
     domain?: string,
     resource?: string
   ) {
@@ -20,17 +20,12 @@ export default class Jid extends JID {
       } else {
         super(local, domain, resource);
       }
-    } else if (
-      '_domain' in (local as JidObject) &&
-      '_local' in (local as JidObject) &&
-      '_resource' in (local as JidObject)
-    ) {
-      super(
-        (local as JidObject)._local,
-        (local as JidObject)._domain,
-        (local as JidObject)._resource
-      );
     }
+    super(
+      (local as JidObject)._local,
+      (local as JidObject)._domain,
+      (local as JidObject)._resource
+    );
   }
 }
 

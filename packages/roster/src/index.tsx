@@ -3,11 +3,11 @@
  * https://xmpp.org/rfcs/rfc6121.html#roster
  * https://xmpp.org/extensions/xep-0237.html
  */
+import Jid from '@xmpp-ts/jid';
 import xml from '@xmpp/xml';
 import { Context as IqContext } from '@xmpp/iq/callee';
 import { Element as XmlElement } from 'ltx';
 import { EventEmitter } from '@xmpp/events';
-import { JID } from '@xmpp/jid';
 import { XmppClient } from '@xmpp/client';
 
 export default class RosterClient extends EventEmitter {
@@ -44,9 +44,9 @@ export default class RosterClient extends EventEmitter {
     };
   }
 
-  async set(item: string | JID | RosterClientSetOptions): Promise<void> {
+  async set(item: string | Jid | RosterClientSetOptions): Promise<void> {
     const { iqCaller } = this.client;
-    if (typeof item === 'string' || item instanceof JID) {
+    if (typeof item === 'string' || item instanceof Jid) {
       item = { jid: item.toString() };
     }
     const groups = item.groups || [];
@@ -64,7 +64,7 @@ export default class RosterClient extends EventEmitter {
     );
   }
 
-  async remove(jid: string | JID): Promise<void> {
+  async remove(jid: string | Jid): Promise<void> {
     const { iqCaller } = this.client;
     await iqCaller.request(
       <iq type="set">
@@ -78,7 +78,7 @@ export default class RosterClient extends EventEmitter {
   handleSetQuery(context: IqContext) {
     if (context.from !== null) {
       const myJid = context.entity?.jid?.bare();
-      const sendingJid = new JID(context.from.local, context.domain).bare();
+      const sendingJid = new Jid(context.from.local, context.domain).bare();
       if (!sendingJid.equals(myJid)) return false;
     }
     const child = context.element;
@@ -96,7 +96,7 @@ export default class RosterClient extends EventEmitter {
 
   on(
     event: 'remove',
-    listener: (item: { jid: JID; version: string }, ...args: any[]) => void
+    listener: (item: { jid: Jid; version: string }, ...args: any[]) => void
   ): this;
   on(
     event: 'set',
@@ -108,7 +108,7 @@ export default class RosterClient extends EventEmitter {
 
   removeListener(
     event: 'remove',
-    listener: (item: { jid: JID; version: string }, args: any[]) => void
+    listener: (item: { jid: Jid; version: string }, args: any[]) => void
   ): this;
   removeListener(
     event: 'set',
@@ -128,7 +128,7 @@ export default class RosterClient extends EventEmitter {
       approved: item.attrs.approved === 'true',
       ask: item.attrs.ask === RosterAsk.SUBSCRIBE,
       groups: item.getChildren('group').map((group) => group.text()),
-      jid: new JID(
+      jid: new Jid(
         item.attrs.jid.split('@')?.[0],
         item.attrs.jid.split('@')?.[1]?.split('/')?.[0] ||
           this.client.jid.domain,
@@ -149,14 +149,14 @@ export interface RosterItem {
   approved: boolean;
   ask: boolean;
   groups: string[];
-  jid: JID;
+  jid: Jid;
   name: string;
   subscription: RosterSubscription;
 }
 
 export interface RosterClientSetOptions {
   groups?: string[];
-  jid: string | JID;
+  jid: string | Jid;
   name?: string;
 }
 

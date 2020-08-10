@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/presence",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "description": "xmpp presence",
   "keywords": [
     "client",
@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.0",
+    "@xmpp-ts/jid": "workspace:*",
     "@xmpp-ts/types": "workspace:*",
     "core-js": "^3.6.5"
   },
