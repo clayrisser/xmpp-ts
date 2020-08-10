@@ -1,7 +1,7 @@
 {
-  "name": "@xmpp-ts/presence",
+  "name": "@xmpp-ts/jid",
   "version": "0.0.41",
-  "description": "xmpp presence",
+  "description": "xmpp jid",
   "keywords": [
     "client",
     "xmpp",
@@ -47,13 +47,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@xmpp-ts/types": "workspace:*",
     "core-js": "^3.6.5"
   },
   "peerDependencies": {
-    "@xmpp/client": "^0.11.1",
-    "@xmpp/events": "^0.11.0",
-    "@xmpp/iq": "^0.11.0",
     "@xmpp/jid": "^0.11.0"
   },
   "devDependencies": {
@@ -71,9 +67,6 @@
     "@types/xmpp__jid": "^1.3.0",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
-    "@xmpp/client": "^0.11.1",
-    "@xmpp/events": "^0.11.0",
-    "@xmpp/iq": "^0.11.0",
     "@xmpp/jid": "^0.11.0",
     "cspell": "^4.0.63",
     "eslint": "^7.6.0",
@@ -101,7 +94,7 @@
   },
   "jestSonar": {
     "reportPath": "node_modules/.tmp/reports",
-    "reportFile": "test-report.presence",
+    "reportFile": "test-report.jid",
     "indent": 4
   },
   "linkTypeDefinitions": [
