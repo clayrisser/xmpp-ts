@@ -29,12 +29,21 @@ export default class MessageClient extends EventEmitter {
       ...options
     };
     this.client.on('stanza', this.handleStanza.bind(this));
+    this.client.on('send', this.handleSend.bind(this));
   }
 
   handleStanza(messageElement: XmlElement) {
     if (messageElement.name === 'message') {
       const message = this.parseMessage(messageElement);
-      if (!message) throw new Error('failed to parse message');
+      if (!message) return;
+      this.emit('message', message);
+    }
+  }
+
+  handleSend(messageElement: XmlElement) {
+    if (messageElement.name === 'message') {
+      const message = this.parseMessage(messageElement);
+      if (!message) return;
       this.emit('message', message);
     }
   }
