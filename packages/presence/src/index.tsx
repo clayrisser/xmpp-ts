@@ -43,15 +43,30 @@ export default class PresenceClient extends EventEmitter {
   }
 
   handlePresence(presence: Presence) {
-    if (
-      this.options.defaultSubscribeResponse &&
-      presence.type === PresenceType.SUBSCRIBE
-    ) {
-      this.send({
-        from: this.client.jid,
-        to: presence.from,
-        type: this.options.defaultSubscribeResponse
-      });
+    if (!presence.type) {
+      if (!presence.from.bare().equals(this.client.jid.bare())) {
+        this.emit('available', presence);
+        return;
+      }
+    }
+    switch (presence.type) {
+      case PresenceType.SUBSCRIBE: {
+        this.emit('subscribe', presence);
+        if (this.options.defaultSubscribeResponse) {
+          this.send({
+            from: this.client.jid,
+            to: presence.from,
+            type: this.options.defaultSubscribeResponse
+          });
+        }
+        break;
+      }
+      case PresenceType.UNAVAILABLE: {
+        if (!presence.from.bare().equals(this.client.jid.bare())) {
+          this.emit('unavailable', presence);
+        }
+        break;
+      }
     }
   }
 
@@ -89,15 +104,19 @@ export default class PresenceClient extends EventEmitter {
   }
 
   on(
-    event: 'unavailable',
-    listener: (presence: Presence, args: any[]) => void
-  ): this;
-  on(
     event: 'available',
     listener: (presence: Presence, args: any[]) => void
   ): this;
   on(
     event: 'presence',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  on(
+    event: 'subscribe',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  on(
+    event: 'unavailable',
     listener: (presence: Presence, args: any[]) => void
   ): this;
   on(event: string | symbol, listener: (...args: any[]) => void): this {
@@ -105,15 +124,19 @@ export default class PresenceClient extends EventEmitter {
   }
 
   removeListener(
-    event: 'unavailable',
-    listener: (presence: Presence, args: any[]) => void
-  ): this;
-  removeListener(
     event: 'available',
     listener: (presence: Presence, args: any[]) => void
   ): this;
   removeListener(
     event: 'presence',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  removeListener(
+    event: 'subscribe',
+    listener: (presence: Presence, args: any[]) => void
+  ): this;
+  removeListener(
+    event: 'unavailable',
     listener: (presence: Presence, args: any[]) => void
   ): this;
   removeListener(

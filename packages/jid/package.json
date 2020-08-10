@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/jid",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "xmpp jid",
   "keywords": [
     "client",
