@@ -32,6 +32,7 @@ export default class MessageClient extends EventEmitter {
   }
 
   handleStanza(messageElement: XmlElement) {
+    console.log('messageElement', messageElement);
     if (messageElement.name === 'message') {
       const message = this.parseMessage(messageElement);
       if (!message) throw new Error('failed to parse message');
@@ -73,7 +74,30 @@ export default class MessageClient extends EventEmitter {
     return super.removeListener(event, listener);
   }
 
-  parseMessage(messageElement: XmlElement): Message {
+  parseMessage(messageElement: XmlElement): Message | undefined {
+    if (messageElement.getAttr('xmlns') !== MessageClient.namespace) return;
+    let archived: Archived | undefined;
+    let stanzaId: StanzaId | undefined;
+    const archivedElement = messageElement.getChild('archived');
+    const stanzaIdElement = messageElement.getChild('stanza-id');
+    if (
+      archivedElement &&
+      archivedElement.getAttr('xmlns') === 'urn:xmpp:mam:tmp'
+    ) {
+      const id = archivedElement.getAttr('id');
+      const byStr = archivedElement.getAttr('by');
+      const by = byStr ? new Jid(byStr) : undefined;
+      if (by && id) archived = { by, id };
+    }
+    if (
+      stanzaIdElement &&
+      stanzaIdElement.getAttr('xmlns') === 'urn:xmpp:sid:0'
+    ) {
+      const id = stanzaIdElement.getAttr('id');
+      const byStr = stanzaIdElement.getAttr('by');
+      const by = byStr ? new Jid(byStr) : undefined;
+      if (by && id) stanzaId = { by, id };
+    }
     const from = messageElement.getAttr('from');
     const header = messageElement.getChild('header')?.text() || undefined;
     const id = messageElement.getAttr('id');
@@ -85,10 +109,8 @@ export default class MessageClient extends EventEmitter {
       .reduce((body: string, bodyElement: XmlElement) => {
         return [body, bodyElement.text()].join('\n');
       }, '');
-    if (body && from && to && id) {
-      return { body, from, to, header, stamp, id, lang };
-    }
-    throw new Error('invalid message stanza');
+    if (!body || !from || !to || !id) return;
+    return { archived, body, from, header, id, lang, stamp, stanzaId, to };
   }
 }
 
@@ -104,15 +126,27 @@ export interface MessageClientSendOptions {
 }
 
 export interface Message {
+  archived?: Archived;
   body: string;
   from: Jid;
   header?: string;
   id: string;
   lang?: string;
   stamp?: Date;
+  stanzaId?: StanzaId;
   to: Jid;
 }
 
 export interface Logger {
   debug(message?: any, ...optionalParams: any[]): void;
+}
+
+export interface Archived {
+  by: Jid;
+  id: string;
+}
+
+export interface StanzaId {
+  by: Jid;
+  id: string;
 }
