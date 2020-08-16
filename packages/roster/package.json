@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/roster",
-  "version": "0.0.53",
+  "version": "0.0.54",
   "description": "xmpp roster",
   "keywords": [
     "client",

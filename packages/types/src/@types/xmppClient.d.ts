@@ -22,9 +22,11 @@ declare module '@xmpp/client' {
   }): XmppClient;
 
   export type XmppClient = EventEmitter & {
+    disconnect: (timeout?: number) => Promise<any>;
     iqCallee: IqCallee;
     iqCaller: IqCaller;
     jid: JID;
+    restart: (...args: any) => Promise<any>;
     send: (...args: any) => Promise<any>;
     start: () => Promise<any>;
     stop: () => Promise<any>;
