@@ -117,7 +117,7 @@ export default class MessageClient extends EventEmitter {
     const body = messageElement
       .getChildren('body')
       .reduce((body: string, bodyElement: XmlElement) => {
-        return [body, bodyElement.text()].join('\n');
+        return [body, bodyElement.text()].join('\n').slice(1);
       }, '');
     if (!body || !from || !to || !id) return;
     return { archived, body, from, header, id, lang, stamp, stanzaId, to };

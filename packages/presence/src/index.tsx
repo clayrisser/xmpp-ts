@@ -58,6 +58,11 @@ export default class PresenceClient extends EventEmitter {
             to: presence.from,
             type: this.options.defaultSubscribeResponse
           });
+          this.send({
+            from: this.client.jid,
+            to: presence.from,
+            type: PresenceType.SUBSCRIBE
+          });
         }
         break;
       }
