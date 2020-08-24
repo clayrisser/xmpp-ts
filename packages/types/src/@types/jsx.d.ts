@@ -22,5 +22,8 @@ declare namespace JSX {
     username: any;
     value: any;
     x: any;
+    PHOTO: any;
+    TYPE: any;
+    BINVAL: any;
   }
 }
