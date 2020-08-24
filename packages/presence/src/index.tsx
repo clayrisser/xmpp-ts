@@ -53,11 +53,13 @@ export default class PresenceClient extends EventEmitter {
       case PresenceType.SUBSCRIBE: {
         this.emit('subscribe', presence);
         if (this.options.defaultSubscribeResponse) {
+          console.log('test', this.options.defaultSubscribeResponse);
           this.send({
             from: this.client.jid,
             to: presence.from,
             type: this.options.defaultSubscribeResponse
           });
+          console.log('presence request');
           this.send({
             from: this.client.jid,
             to: presence.from,
