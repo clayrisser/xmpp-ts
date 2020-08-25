@@ -26,12 +26,11 @@ export default class VcardClient extends EventEmitter {
     const { iqCaller } = this.client;
 
     const iqElement = await iqCaller.request(
-      <iq from={item.from} type="get">
+      <iq from={item.from} to={item.to} type="get">
         <vCard xmlns={VcardClient.namespace} />
       </iq>
     );
     console.log('iqelement', iqElement);
-
     if (iqElement.children.length === 0) return;
     const queryElement = iqElement.getChild('vCard');
     console.log('queryElement', queryElement);
@@ -39,15 +38,9 @@ export default class VcardClient extends EventEmitter {
     console.log('vcard_child', vcard_child);
     const ext = vcard_child?.getChild('EXTVAL')?.text();
     console.log('ext', ext);
-    // const photo = vcard_child?.getChild('PHOTO');
-    // console.log('photo', photo);
-    // const extval = photo?.getChildren[0];
-    // console.log('extval', extval);
-    // const ext = extval?.getChild('EXTVAl');
-    // console.log('ext', ext);
 
     return {
-      ext_val: ext
+      profileImage: ext
       // extval
       // items: (queryElement?.getChildren("item") || []).reduce(
       //   (rosterItems: RosterItem[], itemElement: XmlElement) => {
@@ -61,7 +54,7 @@ export default class VcardClient extends EventEmitter {
     };
   }
 
-  async set(item: vCard): Promise<void> {
+  async set(item: setvCard): Promise<void> {
     const { iqCaller } = this.client;
 
     const historyRequest = xml(
@@ -125,12 +118,16 @@ export interface StanzaPic {
   BINVAL?: string;
 }
 
-export interface vCard {
+export interface setvCard {
   from?: string;
   image?: string;
-  to?: string;
 }
 
 export interface getvCard {
   from?: string;
+  to?: string;
+}
+
+export interface vCard {
+  profileImage?: string;
 }
