@@ -99,6 +99,22 @@ export default class VcardClient extends EventEmitter {
     // );
   }
 
+  on(event: 'vcard', listener: (vcard: vCard, args: any[]) => void): this;
+  on(event: string | symbol, listener: (...args: any[]) => void): this {
+    return super.on(event, listener) as this;
+  }
+
+  removeListener(
+    event: 'vcard',
+    listener: (vcard: vCard, args: any[]) => void
+  ): this;
+  removeListener(
+    event: string | symbol,
+    listener: (...args: any[]) => void
+  ): this {
+    return super.removeListener(event, listener);
+  }
+
   parseVCard(context: IqContext) {
     if (context.from !== null) {
       // const myJid = context.entity?.jid?.bare();
