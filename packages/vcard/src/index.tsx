@@ -3,10 +3,8 @@
  * https://xmpp.org/extensions/xep-0153.html
  * https://xmpp.org/extensions/xep-0054.html
  */
-import Jid from '@xmpp-ts/jid';
 import xml from '@xmpp/xml';
 import { Context as IqContext } from '@xmpp/iq/callee';
-import { Element as XmlElement } from 'ltx';
 import { EventEmitter } from '@xmpp/events';
 import { XmppClient } from '@xmpp/client';
 
@@ -22,7 +20,7 @@ export default class VcardClient extends EventEmitter {
     );
   }
 
-  async get(item: getvCard): Promise<any> {
+  async get(item: GetVCard): Promise<any> {
     const { iqCaller } = this.client;
 
     const iqElement = await iqCaller.request(
@@ -30,33 +28,18 @@ export default class VcardClient extends EventEmitter {
         <vCard xmlns={VcardClient.namespace} />
       </iq>
     );
-    console.log('iqelement', iqElement);
     if (iqElement.children.length === 0) return;
     const queryElement = iqElement.getChild('vCard');
-    console.log('queryElement', queryElement);
-    const vcard_child = queryElement?.getChild('PHOTO');
-    console.log('vcard_child', vcard_child);
-    const ext = vcard_child?.getChild('EXTVAL')?.text();
-    console.log('ext', ext);
-
+    const vCardChild = queryElement?.getChild('PHOTO');
+    const ext = vCardChild?.getChild('EXTVAL')?.text();
     return {
       profileImage: ext
-      // extval
-      // items: (queryElement?.getChildren("item") || []).reduce(
-      //   (rosterItems: RosterItem[], itemElement: XmlElement) => {
-      //     const rosterItem = this.parseRosterItem(itemElement);
-      //     if (rosterItem) rosterItems.push(rosterItem);
-      //     return rosterItems;
-      //   },
-      //   []
-      // ),
-      // version: queryElement?.attrs.ver,
     };
   }
 
-  async set(item: setvCard): Promise<void> {
+  async set(item: SetVCard): Promise<void> {
     const { iqCaller } = this.client;
-
+    if (item.image === undefined) return;
     const historyRequest = xml(
       'iq',
       {
@@ -69,44 +52,21 @@ export default class VcardClient extends EventEmitter {
         {
           xmlns: 'vcard-temp'
         },
-        // xml('BDAY', {}, '1985'),
-        // @ts-ignore
         xml('PHOTO', {}, xml('EXTVAL', {}, item.image))
-        // xml('ADR', {}, xml('CTRY', {}, 'India'))
       )
     );
 
     await iqCaller.request(historyRequest);
-
-    // await iqCaller.request(
-    //   <iq from={item.from} type="set">
-    //     <vCard xmlns={VcardClient.namespace}>
-    //       <BDAY>1476-06-09</BDAY>
-    //       <ADR>
-    //         <CTRY>Italy</CTRY>
-    //       </ADR>
-    //       <N>
-    //         <GIVEN>Juliet</GIVEN>
-    //         <FAMILY>Capulet</FAMILY>
-    //       </N>
-
-    //       {/* <photo>
-    //         <type>image/jpeg</type>
-    //         <binval>{item.image}</binval>
-    //       </photo> */}
-    //     </vCard>
-    //   </iq>
-    // );
   }
 
-  on(event: 'vcard', listener: (vcard: vCard, args: any[]) => void): this;
+  on(event: 'vcard', listener: (vcard: VCard, args: any[]) => void): this;
   on(event: string | symbol, listener: (...args: any[]) => void): this {
     return super.on(event, listener) as this;
   }
 
   removeListener(
     event: 'vcard',
-    listener: (vcard: vCard, args: any[]) => void
+    listener: (vcard: VCard, args: any[]) => void
   ): this;
   removeListener(
     event: string | symbol,
@@ -117,33 +77,22 @@ export default class VcardClient extends EventEmitter {
 
   parseVCard(context: IqContext) {
     if (context.from !== null) {
-      // const myJid = context.entity?.jid?.bare();
-      // const sendingJid = new Jid(context.from.local, context.domain).bare();
-      // if (!sendingJid.equals(myJid)) return false;
+      return true;
     }
-    const child = context.element;
-    console.log('child', child);
+    return true;
   }
 }
 
-export interface StanzaProfile {
-  PHOTO?: StanzaPic[];
-}
-
-export interface StanzaPic {
-  BINVAL?: string;
-}
-
-export interface setvCard {
+export interface SetVCard {
   from?: string;
   image?: string;
 }
 
-export interface getvCard {
+export interface GetVCard {
   from?: string;
   to?: string;
 }
 
-export interface vCard {
+export interface VCard {
   profileImage?: string;
 }
