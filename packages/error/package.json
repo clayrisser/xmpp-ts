@@ -1,6 +1,6 @@
 {
   "name": "@xmpp-ts/error",
-  "version": "0.0.56",
+  "version": "0.0.57",
   "description": "xmpp error",
   "keywords": [
     "client",
