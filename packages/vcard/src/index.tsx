@@ -30,16 +30,40 @@ export default class VcardClient extends EventEmitter {
     );
     if (iqElement.children.length === 0) return;
     const queryElement = iqElement.getChild('vCard');
+    const bday = queryElement?.getChild('BDAY')?.text();
+    const nickName = queryElement?.getChild('NICKNAME')?.text();
+    const fullName = queryElement?.getChild('FN')?.text();
+    const email = queryElement?.getChild('EMAIL')?.text();
+    const address = queryElement?.getChild('ADR');
+    const locality = address?.getChild('LOCALITY')?.text();
+    const country = address?.getChild('CTRY')?.text();
+    const pincode = address?.getChild('PCODE')?.text();
+    const jabberId = queryElement?.getChild('JABBERID')?.text();
+    const title = queryElement?.getChild('TITLE')?.text();
+    const role = queryElement?.getChild('ROLE')?.text();
+    const tel = queryElement?.getChild('TEL');
+    const number = tel?.getChild('NUMBER')?.text();
     const vCardChild = queryElement?.getChild('PHOTO');
     const ext = vCardChild?.getChild('EXTVAL')?.text();
     return {
-      profileImage: ext
+      profileImage: ext,
+      birthday: bday,
+      fullName,
+      email,
+      locality,
+      country,
+      nickName,
+      title,
+      role,
+      phoneNumber: number,
+      jabberID: jabberId,
+      pincode
     };
   }
 
   async set(item: SetVCard): Promise<void> {
     const { iqCaller } = this.client;
-    if (item.image === undefined) return;
+    if (item === undefined) return;
     const historyRequest = xml(
       'iq',
       {
@@ -52,7 +76,30 @@ export default class VcardClient extends EventEmitter {
         {
           xmlns: 'vcard-temp'
         },
-        xml('PHOTO', {}, xml('EXTVAL', {}, item.image))
+        xml('BDAY', {}, item.bday!),
+        xml('FN', {}, item.fullName!),
+        xml('TITLE', {}, item.title!),
+        xml('ROLE', {}, item.role!),
+        xml('PHOTO', {}, xml('EXTVAL', {}, item.image!)),
+        xml(
+          'ADR',
+          {},
+          xml('CTRY', {}, item.country!),
+          xml('LOCALITY', {}, item.locality!),
+          xml('PCODE', {}, item.pincode!),
+          xml('HOME', {})
+        ),
+        xml(
+          'TEL',
+          {},
+          xml('HOME', {}),
+          xml('VOICE', {}),
+          xml('NUMBER', {}, item.number!)
+        ),
+        xml('JABBERID', {}, item.jabberId!),
+
+        xml('NICKNAME', {}, item.nickName!),
+        xml('EMAIL', {}, item.email!)
       )
     );
 
@@ -86,6 +133,17 @@ export default class VcardClient extends EventEmitter {
 export interface SetVCard {
   from?: string;
   image?: string;
+  bday?: string;
+  nickName?: string;
+  fullName?: string;
+  country?: string;
+  locality?: string;
+  email?: string;
+  jabberId?: string;
+  number?: string;
+  title?: string;
+  role?: string;
+  pincode?: number;
 }
 
 export interface GetVCard {
