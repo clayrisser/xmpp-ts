@@ -39,7 +39,7 @@ export default class VcardClient extends EventEmitter {
 
   async set(item: SetVCard): Promise<void> {
     const { iqCaller } = this.client;
-    if (item.image === undefined) return;
+    if (item === undefined) return;
     const historyRequest = xml(
       'iq',
       {
@@ -52,7 +52,17 @@ export default class VcardClient extends EventEmitter {
         {
           xmlns: 'vcard-temp'
         },
-        xml('PHOTO', {}, xml('EXTVAL', {}, item.image))
+        xml('BDAY', {}, item?.bday),
+        xml('PHOTO', {}, xml('EXTVAL', {}, item?.image)),
+        xml(
+          'ADR',
+          {},
+          xml('CTRY', {}, item?.country),
+          xml('LOCALITY', {}, item?.locality),
+          xml('HOME', {})
+        ),
+        xml('NICKNAME', {}, item?.nickName),
+        xml('EMAIL', {}, item?.email)
       )
     );
 
@@ -86,6 +96,12 @@ export default class VcardClient extends EventEmitter {
 export interface SetVCard {
   from?: string;
   image?: string;
+  bday?: string;
+  nickName?: string;
+  fullName?: string;
+  country?: string;
+  locality?: string;
+  email?: string;
 }
 
 export interface GetVCard {
