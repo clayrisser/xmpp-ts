@@ -117,6 +117,7 @@ lib:
 	-@rm -r node_modules/.tmp/lib $(NOFAIL)
 	@$(BABEL) src -d lib --extensions '.ts,.tsx' --source-maps
 	@$(TSC) -d --emitDeclarationOnly
+	@cp -r src/@types/* lib/@types
 	@cp -r node_modules/.tmp/lib/src/. lib $(NOFAIL)
 
 .PHONY: coverage
