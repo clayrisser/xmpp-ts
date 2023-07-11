@@ -1,6 +1,7 @@
 # xmpp-ts
 
 > cross platform typescript library for xmpp built on xmpp.js
+![](assets/xmpp-ts.png)
 
 ## Built by Silicon Hills LLC
 
